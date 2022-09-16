@@ -2,7 +2,7 @@ import React from 'react'
 import Table from 'react-bootstrap/Table';
 
 export default function TableComponent({ listUsers }) {
-  console.log(listUsers)
+  // console.log(listUsers)
   return (
     <div className='container'>
       <Table striped bordered hover>
@@ -19,7 +19,7 @@ export default function TableComponent({ listUsers }) {
         </thead>
         <tbody>
           {listUsers.map(({ id, first_name, last_name, email, gender, age, salary }, index) => (
-            <tr>
+            <tr key={index}>
               <td>{id}</td>
               <td>{first_name}</td>
               <td>{last_name}</td>

@@ -7,7 +7,6 @@ import InputComponent from "./InputComponent";
 
 import TableComponent from "./TableComponent";
 
-
 import { KEY_SEARCH, PAGINATION } from "./constants";
 import PaginationComponent from "./PaginationComponent";
 
@@ -30,15 +29,17 @@ const listOptSearch = [
  * userPage: 10 phần tử (0, 9)
  * => 2 => userPage(10, 19)
  * =========
- * search users => tuyet => 5 phần tử 
+ * search users => tuyet => 5 phần tử
  * => userPage
- * 
- * 
- * 
+ *
+ *
+ *
  */
 function App() {
   const [users, setUsers] = useState([...listUsers]); //users state: lưu tất cả user
-  const [userPage, setUserPage] = useState(listUsers.slice(0, 9));
+  const [userPage, setUserPage] = useState(
+    listUsers.slice(0, PAGINATION.LIMIT)
+  );
   const [keySearch, setKeySearch] = useState(KEY_SEARCH.USER_NAME);
 
   const [pagination, setPagination] = useState({
@@ -51,22 +52,43 @@ function App() {
   */
 
   const onSelectKeySearch = (keyName) => {
-    console.log("keyName", keyName);
     setKeySearch((pre) => (pre = keyName));
   };
 
   const onSearchUser = (valueInput) => {
+    //users lưu dữ liệu của toàn bộ user: 20 =>
+    //userPage lưu dữ liệu của 1 trang thôi
+
+    let data = [];
+
     if (keySearch === KEY_SEARCH.USER_NAME) {
       //filter theo key first_name va trung valueInput
-      setUsers([...listUsers].filter((item) => (item.first_name === valueInput)))
-      console.log(users.first_name + " " + KEY_SEARCH.USER_NAME)
+      data = [...listUsers].filter((item) =>
+        valueInput ? item.first_name === valueInput : true
+      );
+      setUsers((pre) => (pre = [...data])); //bđb =>
     } else if (keySearch === KEY_SEARCH.AGE) {
       //filter theo key age va trung valueInput
-      setUsers([...listUsers].filter((item) => (item.age === valueInput)))
+      data = [...listUsers].filter((item) =>
+        valueInput ? item.age === valueInput : true
+      );
+      setUsers((pre) => (pre = [...data]));
     } else {
       //filter theo key email va trung valueInput
-      setUsers([...listUsers].filter((item) => (item.email === valueInput)))
+      data = [...listUsers].filter((item) =>
+        valueInput ? item.email === valueInput : true
+      );
+      setUsers((pre) => (pre = [...data]));
     }
+
+    //Chia data cho phần tử
+    setPagination({
+      ...pagination,
+      currentPage: PAGINATION.CURRENT_PAGE,
+      totalPage: Math.ceil(data.length / PAGINATION.LIMIT),
+    });
+
+    setUserPage([...data].slice(0, PAGINATION.LIMIT));
   };
 
   const onChangePage = (currentPage) => {
@@ -77,19 +99,17 @@ function App() {
 
     //slice start, end:
 
-
     const newUser = users.slice(
       (currentPage - 1) * PAGINATION.LIMIT,
-      currentPage * PAGINATION.LIMIT - 1
+      currentPage * PAGINATION.LIMIT
     );
     setUserPage((pre) => (pre = newUser));
   };
 
-
   return (
     <div className='App m-4'>
       {/*component input search */}
-      <div className='flex'>
+      <div className='flex mb-2'>
         <InputComponent onSearchUser={(e) => onSearchUser(e.target.value)} />
         <DropdownComponent
           title={keySearch}
@@ -98,13 +118,10 @@ function App() {
         />
       </div>
 
-
       {/*component dropdown list */}
 
-      <TableComponent listUsers={listUsers} />
-      {
-
-      }
+      <TableComponent listUsers={userPage} />
+      {}
 
       {/*component pagination */}
       <PaginationComponent

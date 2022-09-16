@@ -5,7 +5,7 @@ export const KEY_SEARCH = {
 };
 
 export const PAGINATION = {
-    LIMIT: 10,
+    LIMIT: 50,
     CURRENT_PAGE: 1,
     TOTAL_PAGE: 0,
 };
