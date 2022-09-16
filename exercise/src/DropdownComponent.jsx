@@ -1,16 +1,16 @@
 import React from "react";
 import { Dropdown } from "react-bootstrap";
 
-export default function DropdownComponent({ title, optSearch }) {
+export default function DropdownComponent({ title, optSearch, onSelect }) {
   return (
-    <Dropdown>
-      <Dropdown.Toggle variant='success' id='dropdown-basic'>
-        {title}
-      </Dropdown.Toggle>
+    <Dropdown className='bg-green-500'>
+      <Dropdown.Toggle variant='success'>{title}</Dropdown.Toggle>
 
       <Dropdown.Menu>
         {optSearch.map((el, index) => (
-          <Dropdown.Item href='#/action-1' key={index}>{el.name}</Dropdown.Item>
+          <Dropdown.Item key={index} onClick={() => onSelect(el.key)}>
+            {el.name}
+          </Dropdown.Item>
         ))}
       </Dropdown.Menu>
     </Dropdown>

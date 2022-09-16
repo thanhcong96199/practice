@@ -4,29 +4,49 @@ import DropdownComponent from "./DropdownComponent";
 import { useState } from "react";
 import { listUsers } from "./data";
 import InputComponent from "./InputComponent";
+import { KEY_SEARCH } from "./constants";
 
 const listOptSearch = [
   {
     name: "User Name",
-    key: "username",
+    key: KEY_SEARCH.USER_NAME,
   },
   {
     name: "Email",
-    key: "email",
+    key: KEY_SEARCH.EMAIL,
   },
   {
     name: "Age",
-    key: "age",
+    key: KEY_SEARCH.AGE,
   },
 ];
 
 function App() {
   const [users, setUsers] = useState([...listUsers]);
+  const [keySearch, setKeySearch] = useState(KEY_SEARCH.USER_NAME);
+
+  const onSelectKeySearch = (keyName) => {
+    console.log("keyName", keyName);
+    setKeySearch((pre) => (pre = keyName));
+  };
+
+  const onSearchUser = (valueInput) => {
+    if (keySearch === KEY_SEARCH.USER_NAME) {
+      //filter theo key first_name va trung valueInput
+    }
+  };
+  
   return (
-    <div className='App'>
+    <div className='App m-4'>
       {/*component input search */}
-      <InputComponent/>
-      <DropdownComponent title={"Selection search"} optSearch={listOptSearch} />
+      <div className='flex'>
+        <InputComponent />
+        <DropdownComponent
+          title={keySearch}
+          optSearch={listOptSearch}
+          onSelect={onSelectKeySearch}
+        />
+      </div>
 
       {/*component dropdown list */}
 
