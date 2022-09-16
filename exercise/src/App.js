@@ -4,6 +4,10 @@ import DropdownComponent from "./DropdownComponent";
 import { useEffect, useState } from "react";
 import { listUsers } from "./data";
 import InputComponent from "./InputComponent";
+
+import TableComponent from "./TableComponent";
+
+
 import { KEY_SEARCH, PAGINATION } from "./constants";
 import PaginationComponent from "./PaginationComponent";
 
@@ -94,9 +98,13 @@ function App() {
         />
       </div>
 
+
       {/*component dropdown list */}
 
-      {/*component table use */}
+      <TableComponent listUsers={listUsers} />
+      {
+
+      }
 
       {/*component pagination */}
       <PaginationComponent
