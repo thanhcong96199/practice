@@ -1,10 +1,38 @@
 import logo from "./logo.svg";
 import "./App.css";
+import DropdownComponent from "./DropdownComponent";
+import { useState } from "react";
+import { listUsers } from "./data";
+import InputComponent from "./InputComponent";
+
+const listOptSearch = [
+  {
+    name: "User Name",
+    key: "username",
+  },
+  {
+    name: "Email",
+    key: "email",
+  },
+  {
+    name: "Age",
+    key: "age",
+  },
+];
 
 function App() {
+  const [users, setUsers] = useState([...listUsers]);
   return (
     <div className='App'>
-      <h1 className='text-3xl font-bold underline'>Hello world!</h1>
+      {/*component input search */}
+      <InputComponent/>
+      <DropdownComponent title={"Selection search"} optSearch={listOptSearch} />
+
+      {/*component dropdown list */}
+
+      {/*component table use */}
+
+      {/*component pagination */}
     </div>
   );
 }
