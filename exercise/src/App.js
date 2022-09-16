@@ -54,6 +54,14 @@ function App() {
   const onSearchUser = (valueInput) => {
     if (keySearch === KEY_SEARCH.USER_NAME) {
       //filter theo key first_name va trung valueInput
+      setUsers([...listUsers].filter((item) => (item.first_name === valueInput)))
+      console.log(users.first_name + " " + KEY_SEARCH.USER_NAME)
+    } else if (keySearch === KEY_SEARCH.AGE) {
+      //filter theo key age va trung valueInput
+      setUsers([...listUsers].filter((item) => (item.age === valueInput)))
+    } else {
+      //filter theo key email va trung valueInput
+      setUsers([...listUsers].filter((item) => (item.email === valueInput)))
     }
   };
 
@@ -73,11 +81,12 @@ function App() {
     setUserPage((pre) => (pre = newUser));
   };
 
+
   return (
     <div className='App m-4'>
       {/*component input search */}
       <div className='flex'>
-        <InputComponent />
+        <InputComponent onSearchUser={(e) => onSearchUser(e.target.value)} />
         <DropdownComponent
           title={keySearch}
           optSearch={listOptSearch}
