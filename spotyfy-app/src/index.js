@@ -4,11 +4,11 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import AppSptifyGroupTwo from '.AppSptifyGroupTwo'
+import AppSpotifyGroupTwo from './AppSpotifyGroupTwo';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <AppSptifyGroupTwo/>
+  <AppSpotifyGroupTwo/>
   
 );
 
