@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import instance from "./apiConfig";
 import InputSearch from "./components/InputSearch";
+import Panigation from "./components/Panigation";
 
 export default function AppSpotifyGroupTwo() {
   const [artistsSearch, setArtistsSearch] = useState([]);
@@ -20,6 +21,12 @@ export default function AppSpotifyGroupTwo() {
       {/*Input component: search ấn enter  => call api*/}
       {/*List result artis */}
       {/* click item in arties => tracks component*/}
+      <Panigation
+      artistsSearch={artistsSearch}
+      tracks={tracks}
+      offset={offset}
+      setOffset={setOffset}
+      />
     </div>
   );
 }
