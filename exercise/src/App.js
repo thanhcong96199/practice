@@ -106,6 +106,13 @@ function App() {
     setUserPage((pre) => (pre = newUser));
   };
 
+  useEffect(() => {
+    //keysearch => 
+    //pagination => 
+    
+
+  }, [keySearch, pagination.currentPage])
+
   return (
     <div className='App m-4'>
       {/*component input search */}
@@ -121,7 +128,7 @@ function App() {
       {/*component dropdown list */}
 
       <TableComponent listUsers={userPage} />
-      {}
+      { }
 
       {/*component pagination */}
       <PaginationComponent
