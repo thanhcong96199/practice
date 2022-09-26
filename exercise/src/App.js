@@ -41,6 +41,7 @@ function App() {
     listUsers.slice(0, PAGINATION.LIMIT)
   );
   const [keySearch, setKeySearch] = useState(KEY_SEARCH.USER_NAME);
+  const [valueInputSearch, setValueInputSearch] = useState("");
 
   const [pagination, setPagination] = useState({
     totalPage: Math.ceil(users.length / PAGINATION.LIMIT),
@@ -59,36 +60,38 @@ function App() {
     //users lưu dữ liệu của toàn bộ user: 20 =>
     //userPage lưu dữ liệu của 1 trang thôi
 
-    let data = [];
+    // let data = [];
 
-    if (keySearch === KEY_SEARCH.USER_NAME) {
-      //filter theo key first_name va trung valueInput
-      data = [...listUsers].filter((item) =>
-        valueInput ? item.first_name === valueInput : true
-      );
-      setUsers((pre) => (pre = [...data])); //bđb =>
-    } else if (keySearch === KEY_SEARCH.AGE) {
-      //filter theo key age va trung valueInput
-      data = [...listUsers].filter((item) =>
-        valueInput ? item.age === valueInput : true
-      );
-      setUsers((pre) => (pre = [...data]));
-    } else {
-      //filter theo key email va trung valueInput
-      data = [...listUsers].filter((item) =>
-        valueInput ? item.email === valueInput : true
-      );
-      setUsers((pre) => (pre = [...data]));
-    }
+    // if (keySearch === KEY_SEARCH.USER_NAME) {
+    //   //filter theo key first_name va trung valueInput
+    //   data = [...listUsers].filter((item) =>
+    //     valueInput ? item.first_name === valueInput : true
+    //   );
+    //   setUsers((pre) => (pre = [...data])); //bđb =>
+    // } else if (keySearch === KEY_SEARCH.AGE) {
+    //   //filter theo key age va trung valueInput
+    //   data = [...listUsers].filter((item) =>
+    //     valueInput ? item.age === valueInput : true
+    //   );
+    //   setUsers((pre) => (pre = [...data]));
+    // } else {
+    //   //filter theo key email va trung valueInput
+    //   data = [...listUsers].filter((item) =>
+    //     valueInput ? item.email === valueInput : true
+    //   );
+    //   setUsers((pre) => (pre = [...data]));
+    // }
 
-    //Chia data cho phần tử
-    setPagination({
-      ...pagination,
-      currentPage: PAGINATION.CURRENT_PAGE,
-      totalPage: Math.ceil(data.length / PAGINATION.LIMIT),
-    });
+    // //Chia data cho phần tử
+    // setPagination({
+    //   ...pagination,
+    //   currentPage: PAGINATION.CURRENT_PAGE,
+    //   totalPage: Math.ceil(data.length / PAGINATION.LIMIT),
+    // });
 
-    setUserPage([...data].slice(0, PAGINATION.LIMIT));
+    // setUserPage([...data].slice(0, PAGINATION.LIMIT));
+
+    setValueInputSearch(pre => pre = valueInput)
   };
 
   const onChangePage = (currentPage) => {
@@ -99,19 +102,39 @@ function App() {
 
     //slice start, end:
 
-    const newUser = users.slice(
-      (currentPage - 1) * PAGINATION.LIMIT,
-      currentPage * PAGINATION.LIMIT
-    );
-    setUserPage((pre) => (pre = newUser));
+    // const newUser = users.slice(
+    //   (currentPage - 1) * PAGINATION.LIMIT,
+    //   currentPage * PAGINATION.LIMIT
+    // );
+    // setUserPage((pre) => (pre = newUser));
   };
+
+  useEffect(() => {
+    console.log(valueInputSearch, 'valueInputSearch', 'keySearch', keySearch)
+    const data = [...listUsers].filter((item) =>
+      valueInputSearch ? item[keySearch] === valueInputSearch : true
+    );
+
+    setUsers([...data])
+    setPagination({
+      ...pagination,
+      currentPage: PAGINATION.CURRENT_PAGE,
+      totalPage: Math.ceil(data.length / PAGINATION.LIMIT),
+    });
+  }, [valueInputSearch, keySearch])
 
   useEffect(() => {
     //keysearch => 
     //pagination => 
-    
+    console.log('users', users)
+    const newUser = [...users].slice(
+      (pagination.currentPage - 1) * PAGINATION.LIMIT,
+      pagination.currentPage * PAGINATION.LIMIT
+    );
+    setUserPage((pre) => (pre = newUser));
+  }, [pagination.currentPage, pagination.totalPage])
 
-  }, [keySearch, pagination.currentPage])
+
 
   return (
     <div className='App m-4'>
